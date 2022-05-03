@@ -13,32 +13,49 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   List<TransactionCard> transactionCards = [
-    TransactionCard(Transaction("XD", 99.99, DateTime.now())),
-    TransactionCard(Transaction("XD", 99.99, DateTime.now())),
-    TransactionCard(Transaction("XD", 99.99, DateTime.now())),
-    TransactionCard(Transaction("XD", 99.99, DateTime.now())),
-    TransactionCard(Transaction("XD", 99.99, DateTime.now())),
-    TransactionCard(Transaction("XD", 99.99, DateTime.now())),
-    TransactionCard(Transaction("XD", 99.99, DateTime.now())),
-    TransactionCard(Transaction("XD", 99.99, DateTime.now())),
+    TransactionCard(Transaction("XD1", 99.99, DateTime.now())),
+    TransactionCard(Transaction("XD2", 99.99, DateTime.now())),
+    TransactionCard(Transaction("XD3", 99.99, DateTime.now())),
   ];
 
-  void newTransactionCreated(TransactionCard card) {
+  void _startAddNewTransaction(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return Container();
+      },
+    );
+  }
+
+  void _newTransactionCreated(TransactionCard card) {
     setState(() {
       transactionCards.add(card);
     });
   }
+
+  Widget plsJustBuild() {
+    return Container();
+  }
+
 //
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
+        appBar: AppBar(
+          title: const Text(":D"),
+          actions: [
+            IconButton(
+                onPressed: () => _startAddNewTransaction(context),
+                icon: const Icon(Icons.add))
+          ],
+        ),
         body: SizedBox(
           width: double.infinity,
           child: Column(
             children: [
-              NewTransaction(newTransactionCreated),
+              //NewTransaction(_newTransactionCreated),
               SizedBox(
                 height: 320,
                 child: ListView(children: [
@@ -46,6 +63,14 @@ class _MyAppState extends State<MyApp> {
                 ]),
               )
             ],
+          ),
+        ),
+        floatingActionButton: FloatingActionButton(
+          child: const Icon(Icons.add),
+          //onPressed: () => _startAddNewTransaction(context)
+          onPressed: () => showModalBottomSheet(
+            context: context,
+            builder: (context) => plsJustBuild(),
           ),
         ),
       ),
