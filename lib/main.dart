@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:spendings_checker/new_transaction.dart';
-import 'package:spendings_checker/transaction.dart';
+import './new_transaction.dart';
+import './transaction.dart';
 
-void main() => runApp(const MyApp());
+void main() => runApp(
+      MaterialApp(
+        home: const MyApp(),
+      ),
+    );
 
 class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -30,48 +34,43 @@ class _MyAppState extends State<MyApp> {
   void _newTransactionCreated(TransactionCard card) {
     setState(() {
       transactionCards.add(card);
+      Navigator.of(context).pop();
     });
   }
 
-  Widget plsJustBuild() {
-    return Container();
+  void _floatingButtonClick() {
+    setState(() {
+      NewTransaction newTransaction = NewTransaction(_newTransactionCreated);
+      newTransaction.show(context);
+    });
   }
 
 //
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text(":D"),
-          actions: [
-            IconButton(
-                onPressed: () => _startAddNewTransaction(context),
-                icon: const Icon(Icons.add))
+    return Scaffold(
+      floatingActionButton:
+          FloatingActionButton(onPressed: _floatingButtonClick),
+      appBar: AppBar(
+        title: const Text(":D"),
+        actions: [
+          IconButton(
+              onPressed: () => _startAddNewTransaction(context),
+              icon: const Icon(Icons.add))
+        ],
+      ),
+      body: SizedBox(
+        width: double.infinity,
+        child: Column(
+          children: [
+            //NewTransaction(_newTransactionCreated),
+            SizedBox(
+              height: 320,
+              child: ListView(children: [
+                ...transactionCards,
+              ]),
+            )
           ],
-        ),
-        body: SizedBox(
-          width: double.infinity,
-          child: Column(
-            children: [
-              //NewTransaction(_newTransactionCreated),
-              SizedBox(
-                height: 320,
-                child: ListView(children: [
-                  ...transactionCards,
-                ]),
-              )
-            ],
-          ),
-        ),
-        floatingActionButton: FloatingActionButton(
-          child: const Icon(Icons.add),
-          //onPressed: () => _startAddNewTransaction(context)
-          onPressed: () => showModalBottomSheet(
-            context: context,
-            builder: (context) => plsJustBuild(),
-          ),
         ),
       ),
     );

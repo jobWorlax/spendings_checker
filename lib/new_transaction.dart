@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'transaction.dart';
 
-class NewTransaction extends StatelessWidget {
+class NewTransaction {
   final _nameController = TextEditingController();
   final _amountController = TextEditingController();
   final Function(TransactionCard) _newTransactionCreated;
@@ -9,10 +9,31 @@ class NewTransaction extends StatelessWidget {
   NewTransaction(this._newTransactionCreated);
 
   void _createTransactionButtonClick() {
-    TransactionCard card = TransactionCard(Transaction(_nameController.text,
-        double.parse(_amountController.text), DateTime.now()));
+    TransactionCard card = TransactionCard(
+      Transaction(
+        _nameController.text,
+        double.parse(_amountController.text),
+        DateTime.now(),
+      ),
+    );
     _newTransactionCreated.call(card);
   }
+
+  void show(BuildContext context) => _showModalBottomSheet(context);
+
+  void _showModalBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (_) {
+        return NewTransactionCard(this);
+      },
+    );
+  }
+}
+
+class NewTransactionCard extends StatelessWidget {
+  NewTransaction newTransaction;
+  NewTransactionCard(this.newTransaction);
 
   @override
   Widget build(BuildContext context) {
@@ -26,18 +47,18 @@ class NewTransaction extends StatelessWidget {
                 labelText: "Name",
                 labelStyle: TextStyle(fontSize: 14),
               ),
-              controller: _nameController,
+              controller: newTransaction._nameController,
             ),
             TextField(
               decoration: const InputDecoration(
                 labelText: "Amount",
                 labelStyle: TextStyle(fontSize: 14),
               ),
-              controller: _amountController,
+              controller: newTransaction._amountController,
             ),
             const SizedBox(height: 12),
             TextButton(
-              onPressed: _createTransactionButtonClick,
+              onPressed: newTransaction._createTransactionButtonClick,
               child: const Text(
                 "Create",
                 style: TextStyle(color: Colors.purple),
