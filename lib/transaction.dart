@@ -34,14 +34,17 @@ class TransactionCard extends StatelessWidget {
               alignment: Alignment.center,
               width: 85,
               decoration: BoxDecoration(
-                  border: Border.all(color: Colors.purple, width: 2)),
+                border: Border.all(
+                    width: 2, color: Theme.of(context).primaryColorDark),
+              ),
               padding: const EdgeInsets.all(6),
               child: Text(
                 "$_formattedCost \$",
-                style: const TextStyle(
-                    fontSize: 17,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.purple),
+                style: TextStyle(
+                  fontSize: 17,
+                  fontWeight: FontWeight.bold,
+                  color: Theme.of(context).primaryColorDark,
+                ),
               ),
             ),
             Container(

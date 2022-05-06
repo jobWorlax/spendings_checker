@@ -4,6 +4,10 @@ import './transaction.dart';
 
 void main() => runApp(
       MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          primarySwatch: Colors.orange,
+        ),
         home: const MyApp(),
       ),
     );
@@ -49,8 +53,10 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton:
-          FloatingActionButton(onPressed: _floatingButtonClick),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _floatingButtonClick,
+        child: Icon(Icons.add),
+      ),
       appBar: AppBar(
         title: const Text(":D"),
         actions: [
@@ -63,7 +69,6 @@ class _MyAppState extends State<MyApp> {
         width: double.infinity,
         child: Column(
           children: [
-            //NewTransaction(_newTransactionCreated),
             SizedBox(
               height: 320,
               child: ListView(children: [

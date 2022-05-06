@@ -61,7 +61,6 @@ class NewTransactionCard extends StatelessWidget {
               onPressed: newTransaction._createTransactionButtonClick,
               child: const Text(
                 "Create",
-                style: TextStyle(color: Colors.purple),
               ),
             )
           ],
